@@ -14,6 +14,14 @@ pizzaJson.map((pizza, index) => {
     pizzaSingle.querySelector('.pizza-item--price').innerHTML = `${pizza.price.toFixed(2)}`;
     pizzaSingle.querySelector('.pizza-item--name').innerHTML = pizza.name;
     pizzaSingle.querySelector('.pizza-item--desc').innerHTML = pizza.description;
+
+    pizzaSingle.querySelector('a').addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('works');
+        selectItem('.pizzaWindowArea').style.display = 'flex';
+    })
+
+    
     
     
     
