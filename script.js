@@ -2,7 +2,7 @@ const selectItem = (el) => { return document.querySelector(el); }
 const selectAll = (el) => {return document.querySelectorAll(el);}
 let modalQty = 1;
 
-
+// make loop for pizzas items
 pizzaJson.map((pizza, index) => {
     //make a clone 
     let pizzaSingle = selectItem('.models .pizza-item').cloneNode(true);
@@ -45,10 +45,29 @@ pizzaJson.map((pizza, index) => {
         selectItem('.pizzaWindowArea').style.display = 'flex';
         setTimeout(()=> {
             selectItem('.pizzaWindowArea').style.opacity = 1;
-        }, 200)
-        
-        
+        }, 200)  
     })
+
+
+
+
+
+
+    
     selectItem('.pizza-area').append(pizzaSingle);
 
+})
+
+//modal events
+function closeModal(){
+    
+    selectItem('.pizzaWindowArea').style.opacity = '0';
+    setTimeout(() => {
+        selectItem('.pizzaWindowArea').style.display = 'none';
+    }, 500)
+
+
+}
+selectAll('.cpizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item) => {
+    item.addEventListener('click', closeModal);
 })
