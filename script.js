@@ -95,10 +95,23 @@ selectAll('.pizzaInfo--size').forEach((size, sizeIndex) => {
 
 selectItem('.pizzaInfo--addButton').addEventListener('click', () => {
     let size = parseInt(selectItem('.pizzaInfo--size.selected').getAttribute('data-key'));
-    cart.push({
-        id: pizzaJson[modalKey].id,
-        size,
-        qty: modalQty
-    })
+    
+    let indentifier = pizzaJson[modalKey].id+'@'+size;
+
+    let key = cart.findIndex((item) => item.indentifier == indentifier);
+
+
+    if(key > -1){
+        cart[key].qty += modalQty;
+
+    }else{
+        cart.push({
+            indentifier,
+            id: pizzaJson[modalKey].id,
+            size,
+            qty: modalQty
+        })
+    }
+    
     closeModal();
 })
