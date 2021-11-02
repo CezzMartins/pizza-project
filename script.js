@@ -117,13 +117,29 @@ selectItem('.pizzaInfo--addButton').addEventListener('click', () => {
     closeModal();
 })
 
+selectItem('.menu-openner').addEventListener('click', () => {
+    if(cart.length > 0){
+        selectItem('aside').style.left = '0';
+    }
+})
+selectItem('.menu-closer').addEventListener('click', () => {
+    selectItem('aside').style.left = '100vw';
+})
+
 function updateCart(){
+    selectItem('.menu-openner span').innerHTML = cart.length;
+
     if(cart.length > 0){
         selectItem('aside').classList.add('show');
         selectItem('.cart').innerHTML = '';
 
+        let subTotal = 0;
+        let priceOff = 0;
+        let total = 0;
+
         for(let i in cart){
-            let pizzaItem = pizzaJson.find((item) => item.id == cart[i].id)
+            let pizzaItem = pizzaJson.find((item) => item.id == cart[i].id);
+            subTotal += pizzaItem.price * cart[i].qty;
             let cartItem = selectItem('.models .cart--item').cloneNode(true);
             let pizzaSizeName;
 
@@ -144,11 +160,31 @@ function updateCart(){
             cartItem.querySelector('img').src = pizzaItem.img;
             cartItem.querySelector('.cart--item-name').innerHTML = pizzaCart;
             cartItem.querySelector('.cart--item--qt').innerHTML = cart[i].qty;
+            cartItem.querySelector('.cart--item-qtmenos').addEventListener('click', () => {
+                if(cart[i].qty > 1){
+                    cart[i].qty --;
+                } else{
+                    cart.splice(i, 1);
+                }
+                updateCart();
+            })
+
+            cartItem.querySelector('.cart--item-qtmais').addEventListener('click', () => {
+                cart[i].qty ++;
+                updateCart();
+            })
 
             selectItem('.cart').append(cartItem);
-            
         }
+        priceOff = subTotal * 0.1;
+        total = subTotal - priceOff;
+
+        selectItem('.subtotal span:last-child').innerHTML = `R$ ${subTotal.toFixed(2)}`;
+        selectItem('.desconto span:last-child').innerHTML = `R$ ${priceOff.toFixed(2)}`;
+        selectItem('.total span:last-child').innerHTML = `R$ ${total.toFixed(2)}`;
+
     }else{
-        selectItem('aside').classList.add('remove');
+        selectItem('aside').classList.add('show');
+        selectItem('aside').style.left = '100vw';
     }
 }
