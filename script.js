@@ -184,7 +184,7 @@ function updateCart(){
         selectItem('.total span:last-child').innerHTML = `R$ ${total.toFixed(2)}`;
 
     }else{
-        selectItem('aside').classList.add('show');
+        selectItem('aside').classList.remove('show');
         selectItem('aside').style.left = '100vw';
     }
 }
