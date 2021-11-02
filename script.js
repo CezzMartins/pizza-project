@@ -112,6 +112,43 @@ selectItem('.pizzaInfo--addButton').addEventListener('click', () => {
             qty: modalQty
         })
     }
-    
+
+    updateCart();
     closeModal();
 })
+
+function updateCart(){
+    if(cart.length > 0){
+        selectItem('aside').classList.add('show');
+        selectItem('.cart').innerHTML = '';
+
+        for(let i in cart){
+            let pizzaItem = pizzaJson.find((item) => item.id == cart[i].id)
+            let cartItem = selectItem('.models .cart--item').cloneNode(true);
+            let pizzaSizeName;
+
+            switch(cart[i].size){
+                case 0:
+                    pizzaSizeName = 'P';
+                    break;
+                case 1: 
+                    pizzaSizeName = 'M';
+                    break
+                case 2:
+                    pizzaSizeName = 'G';
+                    break
+            }
+
+            let pizzaCart = `${pizzaItem.name} (${pizzaSizeName})`
+
+            cartItem.querySelector('img').src = pizzaItem.img;
+            cartItem.querySelector('.cart--item-name').innerHTML = pizzaCart;
+            cartItem.querySelector('.cart--item--qt').innerHTML = cart[i].qty;
+
+            selectItem('.cart').append(cartItem);
+            
+        }
+    }else{
+        selectItem('aside').classList.add('remove');
+    }
+}
